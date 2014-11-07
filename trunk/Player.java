@@ -71,5 +71,15 @@ public class Player extends Actor
             countMoveLeft++;
         }
         
+        if(Greenfoot.isKeyDown("up"))
+        {
+            setLocation(getX(),getY()-80);
+        }
+        
+        if(Greenfoot.isKeyDown("down"))
+        {
+            setLocation(getX(),getY()+80);
+        }
+        
     }    
 }
