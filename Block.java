@@ -25,9 +25,7 @@ public class Block extends Actor
     public void dibujar()
     {
         GreenfootImage imagen;
-        imagen=new GreenfootImage(SnowCompsWorld.TAM_BLOCK, SnowCompsWorld.TAM_BLOCK);
-        imagen.setColor(java.awt.Color.white);
-        imagen.fill();
+        imagen=new GreenfootImage("bloque.png");
         this.setImage(imagen);
     }  
 }

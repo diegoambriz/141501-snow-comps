@@ -38,7 +38,6 @@ public class Plattaform1 extends Actor
         getWorld().addObject(array[4], getX()+30, getY()-60);
         getWorld().addObject(array[5], getX(), getY()-60);
 
-        
         getWorld().addObject(array[6], getX()+30, getY());
         getWorld().addObject(array[7], getX()+60, getY());
         getWorld().addObject(array[8], getX()+90, getY());
@@ -57,7 +56,5 @@ public class Plattaform1 extends Actor
         getWorld().addObject(array[21], getX()+470, getY());
         getWorld().addObject(array[22], getX()+500, getY());
         getWorld().addObject(array[23], getX()+530, getY());
-        
-        
     }
 }
