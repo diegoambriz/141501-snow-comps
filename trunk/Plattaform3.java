@@ -1,24 +1,25 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Plattaform2 here.
+ * Write a description of class Plattaform3 here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Plattaform2 extends Actor
+public class Plattaform3 extends Actor
 {
     /**
-     * Act - do whatever the Plattaform2 wants to do. This method is called whenever
+     * Act - do whatever the Plattaform3 wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    private Block [] array;
     
-    public Plattaform2()
+    private Block [] array;
+   
+    public Plattaform3()
     {
-       array= new Block[25];
+       array= new Block[30];
        
-       for(int i=0;i<25;i++)
+       for(int i=0;i<30;i++)
        {
            array[i]=new Block();
        }
@@ -49,10 +50,14 @@ public class Plattaform2 extends Actor
         getWorld().addObject(array[15], getX()+440, getY());
         getWorld().addObject(array[16], getX()+470, getY());
         getWorld().addObject(array[17], getX()+500, getY());
-        getWorld().addObject(array[18], getX()+500, getY()-30);
-        getWorld().addObject(array[19], getX()+530, getY());
-        getWorld().addObject(array[20], getX()+530, getY()-30);
-        getWorld().addObject(array[21], getX()+500, getY()-60);
-        getWorld().addObject(array[22], getX()+530, getY()-60);
-    }  
+        getWorld().addObject(array[18], getX()+530, getY());
+        getWorld().addObject(array[19], getX()+560, getY());
+        getWorld().addObject(array[20], getX()+590, getY());
+        getWorld().addObject(array[21], getX()+610, getY());
+        getWorld().addObject(array[22], getX()+640, getY());
+        getWorld().addObject(array[23], getX()+670, getY());
+        getWorld().addObject(array[24], getX()+700, getY());
+        getWorld().addObject(array[25], getX()+730, getY());
+        getWorld().addObject(array[26], getX()+760, getY());
+    }    
 }
