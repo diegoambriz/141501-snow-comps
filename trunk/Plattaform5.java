@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Plattaform1 extends Actor
+public class Plattaform5 extends Actor
 {
     /**
      * Act - do whatever the Plattaform3 wants to do. This method is called whenever
@@ -15,7 +15,7 @@ public class Plattaform1 extends Actor
     
     private Block [] array;
    
-    public Plattaform1()
+    public Plattaform5()
     {
        array= new Block[30];
        
@@ -46,7 +46,7 @@ public class Plattaform1 extends Actor
         getWorld().addObject(array[11], getX()+330, getY());
         getWorld().addObject(array[12], getX()+360, getY());
         getWorld().addObject(array[13], getX()+390, getY());
-        getWorld().addObject(array[14], getX()+410, getY());
+        /*getWorld().addObject(array[14], getX()+410, getY());
         getWorld().addObject(array[15], getX()+440, getY());
         getWorld().addObject(array[16], getX()+470, getY());
         getWorld().addObject(array[17], getX()+500, getY());
@@ -58,6 +58,6 @@ public class Plattaform1 extends Actor
         getWorld().addObject(array[23], getX()+670, getY());
         getWorld().addObject(array[24], getX()+700, getY());
         getWorld().addObject(array[25], getX()+730, getY());
-        getWorld().addObject(array[26], getX()+760, getY());
+        getWorld().addObject(array[26], getX()+760, getY());*/
     }    
 }

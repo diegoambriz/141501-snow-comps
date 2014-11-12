@@ -22,28 +22,30 @@ public class SnowCompsWorld extends World
         
         addObject(player1,100,550);
         
-        Plattaform1 plattaform;
-        plattaform=new Plattaform1();
-        
-        Plattaform1 plattaform3;
-        plattaform3=new Plattaform1();
-        
+        Plattaform1 plattaform1;
         Plattaform2 plattaform2;
-        plattaform2=new Plattaform2();
-        
-        Plattaform2 plattaform4;
-        plattaform4=new Plattaform2();
+        Plattaform3 plattaform3;
+        Plattaform4 plattaform4;
         
         Plattaform3 plattaform5;
+        Plattaform4 plattaform6;
+        Plattaform3 plattaform7;
+        
+        plattaform1=new Plattaform1();
+        plattaform2=new Plattaform2();
+        plattaform3=new Plattaform3();
+        plattaform4=new Plattaform4();//
         plattaform5=new Plattaform3();
+        plattaform6=new Plattaform4();
+        plattaform7=new Plattaform3();
         
-        //addObject(plattaform,100,450);
-        addObject(plattaform,130,510);
-        addObject(plattaform2,130,380);//y=380
-        addObject(plattaform3,130,230);
-        addObject(plattaform4,130,80);
-        addObject(plattaform5,15,584);
-        
+        addObject(plattaform1,15,584);
+        addObject(plattaform2,130,510);
+        addObject(plattaform3,300,440);
+        addObject(plattaform4,130,367);//
+        addObject(plattaform5,300,291);
+        addObject(plattaform6,130,218);
+        addObject(plattaform7,300,145);
     }
     
     public void act()
