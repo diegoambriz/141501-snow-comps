@@ -25,7 +25,7 @@ public class Block extends Actor
     public void dibujar()
     {
         GreenfootImage imagen;
-        imagen=new GreenfootImage("bloque.png");
+        imagen=new GreenfootImage("block.png");
         this.setImage(imagen);
     }  
 }

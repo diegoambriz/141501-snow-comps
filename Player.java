@@ -18,6 +18,7 @@ public class Player extends Actor
     private GreenfootImage []jumpRight;
     private GreenfootImage []jumpDown;
     private GreenfootImage []shootRight;
+    private GreenfootImage []shootLeft;
     
     private GreenfootImage walkRight1 =new GreenfootImage("nickRight1.png");
     private GreenfootImage walkRight2 =new GreenfootImage("nickRight2.png");
@@ -48,7 +49,18 @@ public class Player extends Actor
     private GreenfootImage shootRight1=new GreenfootImage("shootRight1.png");
     private GreenfootImage shootRight2=new GreenfootImage("shootRight2.png");
     private GreenfootImage shootRight3=new GreenfootImage("shootRight3.png");
-        
+    
+    private GreenfootImage shootLeft1=new GreenfootImage("shootLeft1.png");
+    private GreenfootImage shootLeft2=new GreenfootImage("shootLeft2.png");
+    private GreenfootImage shootLeft3=new GreenfootImage("shootLeft3.png");
+    
+    private int score=0;
+    private int lifes=3;
+    
+    private boolean isDirectionRight;
+    private boolean isTurnDown;
+    private String direction;
+    
     private int countMoveRight;
     private int countMoveLeft;
     private int countJumpLeft;
@@ -62,6 +74,7 @@ public class Player extends Actor
         jumpRight=new GreenfootImage[6];
         jumpDown=new GreenfootImage[3];
         shootRight=new GreenfootImage[3];
+        shootLeft=new GreenfootImage[3];
         
         moveRight[0]=walkRight1;
         moveRight[1]=walkRight2;
@@ -93,6 +106,14 @@ public class Player extends Actor
         shootRight[1]=shootRight2;
         shootRight[2]=shootRight3;
         
+        shootLeft[0]=shootLeft1;
+        shootLeft[1]=shootLeft2;
+        shootLeft[2]=shootLeft3;
+        
+        isDirectionRight=true;
+        isTurnDown=false;
+        direction="right";
+        
         countMoveRight=0;
         countMoveLeft=0;
         countJumpLeft=0;
@@ -101,9 +122,11 @@ public class Player extends Actor
     public void act() 
     {
         // Add your action code here.
-    
         if(Greenfoot.isKeyDown("right"))
         {
+            isDirectionRight=true;
+            direction="right";
+            
             if(countMoveRight>2)
             {
                 countMoveRight=0;
@@ -119,6 +142,9 @@ public class Player extends Actor
         
         if(Greenfoot.isKeyDown("left"))
         {
+            isDirectionRight=false;
+            direction="left";
+            
             if(countMoveLeft>2)
             {
                 countMoveLeft=0;
@@ -134,11 +160,24 @@ public class Player extends Actor
         
         if(Greenfoot.isKeyDown("up"))
         {
-            for(int i=0;i<6;i++)
+            if(isDirectionRight!=true)
             {
-                Greenfoot.delay(1);
-                setLocation(getX(),getY()-12);
-                setImage(jumpLeft[i]);
+                for(int i=0;i<6;i++)
+                {
+                    Greenfoot.delay(1);
+                    setLocation(getX(),getY()-12);
+                    setImage(jumpLeft[i]);
+                }
+            }
+            
+            else
+            {
+                for(int i=0;i<6;i++)
+                {
+                    Greenfoot.delay(1);
+                    setLocation(getX(),getY()-12);
+                    setImage(jumpRight[i]);
+                }
             }
         }
         
@@ -147,29 +186,51 @@ public class Player extends Actor
             setLocation(getX(),getY()+15);
         }
         
-        if(Greenfoot.isKeyDown("Enter"))
+        if(Greenfoot.isKeyDown("Enter") && isTurnDown==false)
         {
-            for(int i=0;i<3;i++)
+            SnowBall aSnowBall;
+            
+             
+            if(isDirectionRight==true)
             {
-                Greenfoot.delay(1);
-                setImage(shootRight[i]);
+                aSnowBall=new SnowBall("right");
+                
+                for(int i=0;i<3;i++)
+                {
+                    Greenfoot.delay(1);
+                    setImage(shootRight[i]);
+                }
+                
+                getWorld().addObject(aSnowBall,getX()+20,getY());
+            }
+            
+            else
+            {
+                aSnowBall=new SnowBall("left");
+                
+                for(int i=0;i<3;i++)
+                {
+                    Greenfoot.delay(1);
+                    setImage(shootLeft[i]);
+                }
+                
+                getWorld().addObject(aSnowBall,getX()-20,getY());
+                aSnowBall.shootLeft();
             }
         }
         
         if(isTouching(Block.class)!=true && getY()<550)
         {
-            //for(int i=0;i<2;i++)
-            //{
-                setLocation(getX(),getY()+10);
-                setImage(jumpDown[1]);
-            //}
+            isTurnDown=true;
+            setLocation(getX(),getY()+10);
+            setImage(jumpDown[1]);
             
             if(getY()>500)
             {
                 setLocation(getX(),550);
                 setImage(walkRight1);
             }
-        } 
+        }
     }
     
     public boolean isAtEdge()
@@ -186,5 +247,10 @@ public class Player extends Actor
         return(true);
         
        return(false);
+    }
+    
+    public String getDirection()
+    {
+        return direction;
     }
 }
