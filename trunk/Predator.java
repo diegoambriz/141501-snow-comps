@@ -29,7 +29,10 @@ public class Predator extends Enemy
     private int countMoveRight;
     private int countMoveLeft;
     private String direction;
-   
+    
+    private int health;
+    private boolean dead;
+    
     public Predator()
     {
         moveRight=new GreenfootImage[4];
@@ -49,6 +52,8 @@ public class Predator extends Enemy
         countMoveRight=0;
         countMoveLeft=0;
         direction="Right";
+        dead=false;
+        health=3;
     }
     
     public void act() 
@@ -86,5 +91,32 @@ public class Predator extends Enemy
            setImage(moveRight[countMoveRight]);
            countMoveRight++;
        }
-    }    
+       
+       if(isTouching(SnowBall.class))
+       {
+           health--;
+           removeTouching(SnowBall.class);
+       }
+       
+       if(health==0)
+       {
+           this.dead=true;
+           System.out.println("Dead");
+       }
+    }
+    
+    public boolean isDead()
+    {
+       /*if(health==0)
+       {
+           return true;
+           //setLocation(1000,0);
+           
+           //getWorld().removeObject(this);
+       }
+       
+       else
+           return false;*/
+       return dead;
+    }
 }

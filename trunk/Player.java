@@ -142,7 +142,13 @@ public class Player extends Actor
         isTurnDown=false;
         msgScore.setValue(score);
         msgLifes.setValue(lifes);
- 
+        
+        
+        if(lifes==0)
+        {
+            Greenfoot.stop();
+        }
+        
         if(Greenfoot.isKeyDown("right"))
         {
             isDirectionRight=true;
@@ -257,7 +263,7 @@ public class Player extends Actor
             }
         }
         
-        if(isTouching(Predator.class))
+        if(isTouching(Predator.class)|| isTouching(Finn.class))
         {
             setLocation(100,550);
             lifes--;

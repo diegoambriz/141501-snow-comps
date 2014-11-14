@@ -11,6 +11,8 @@ public class SnowCompsWorld extends World
     private SimpleTimer clock;
     private Counter msgTimer;
     
+    private Finn finn1,finn2,finn3;
+    private Predator predator1,predator2,predator3;
     GreenfootSound backgroundMusic = new GreenfootSound("Main Theme Snow-Comps.mp3");
     /**
      * Constructor for objects of class SnowCompsWorld.
@@ -32,8 +34,7 @@ public class SnowCompsWorld extends World
         Player player1;
         player1=new Player();
         
-        Finn finn1,finn2,finn3;
-        Predator predator1,predator2,predator3;
+        
         
         finn1=new Finn();
         finn2=new Finn();
@@ -86,6 +87,36 @@ public class SnowCompsWorld extends World
         {
             clock.mark();
             msgTimer.add(-1);
+        }
+        
+        if(predator1.isDead()==true)
+        {
+            removeObject(predator1);
+        }
+        
+        if(predator2.isDead()==true)
+        {
+            removeObject(predator2);
+        }
+        
+        if(predator3.isDead()==true)
+        {
+            removeObject(predator3);
+        }
+        
+        if(finn1.isDead()==true)
+        {
+            removeObject(finn1);
+        }
+        
+        if(finn2.isDead()==true)
+        {
+            removeObject(finn2);
+        }
+        
+        if(finn3.isDead()==true)
+        {
+            removeObject(finn3);
         }
     } 
 }
