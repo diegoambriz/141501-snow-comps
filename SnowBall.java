@@ -13,10 +13,12 @@ public class SnowBall extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     private String shootDirection;
+    private boolean target;
     
     public SnowBall(String aDirection)
     {
         shootDirection=aDirection;
+        target=false;
     }
     
     public void act() 
@@ -31,19 +33,34 @@ public class SnowBall extends Actor
             setLocation(getX()-10,getY());
         }
         
-        if(isAtEdge())
+        if(isAtEdge() && target==false || isTouching(Predator.class))
         {
+            target=true;
             getWorld().removeObject(this);
         }
+        
+        /*if(isTouching(Predator.class))
+        {
+            target=true;
+            getWorld().removeObject(this);
+        }*/
     }
     
-    public void shootRight()
+    public boolean isShoot()
     {
-        
+        return target;
     }
     
-    public void shootLeft()
+    public boolean shootPredator()
     {
+        if(target==true)
+        {
+            return true;
+        }
         
+        else
+        {
+            return false;
+        }
     }
 }

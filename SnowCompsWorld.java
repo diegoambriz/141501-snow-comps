@@ -7,6 +7,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class SnowCompsWorld extends World
 {
     public static final int TAM_BLOCK=30;
+    
+    private SimpleTimer clock;
+    private Counter msgTimer;
+    
     GreenfootSound backgroundMusic = new GreenfootSound("Main Theme Snow-Comps.mp3");
     /**
      * Constructor for objects of class SnowCompsWorld.
@@ -17,10 +21,37 @@ public class SnowCompsWorld extends World
         // Create a new world with 800x600 cells with a cell size of 1x1 pixels.
         super(790, 600, 1);
         
+        clock= new SimpleTimer();
+        msgTimer= new Counter("Time:");
+        
+        msgTimer.setValue(60);
+        addObject(msgTimer,730,30);
+        clock.mark();
+        
+        
         Player player1;
         player1=new Player();
         
+        Finn finn1,finn2,finn3;
+        Predator predator1,predator2,predator3;
+        
+        finn1=new Finn();
+        finn2=new Finn();
+        finn3=new Finn();
+        
+        predator1=new Predator();
+        predator2=new Predator();
+        predator3=new Predator();
+        
         addObject(player1,100,550);
+        
+        addObject(finn1,594,405);
+        addObject(finn2,594,256);
+        addObject(finn3,594,106);
+        
+        addObject(predator1,190,471);
+        addObject(predator2,190,328);
+        addObject(predator3,190,179);
         
         Plattaform1 plattaform1;
         Plattaform2 plattaform2;
@@ -51,5 +82,10 @@ public class SnowCompsWorld extends World
     public void act()
     {
         backgroundMusic.playLoop();
+        if(clock.millisElapsed()>=1000)
+        {
+            clock.mark();
+            msgTimer.add(-1);
+        }
     } 
 }
