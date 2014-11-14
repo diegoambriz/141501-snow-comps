@@ -20,6 +20,10 @@ public class Player extends Actor
     private GreenfootImage []shootRight;
     private GreenfootImage []shootLeft;
     
+    private Counter msgScore;
+    private Counter msgLifes;
+    private CounterLifes countLifes;
+    
     private GreenfootImage walkRight1 =new GreenfootImage("nickRight1.png");
     private GreenfootImage walkRight2 =new GreenfootImage("nickRight2.png");
     private GreenfootImage walkRight3 =new GreenfootImage("nickRight3.png");
@@ -114,14 +118,31 @@ public class Player extends Actor
         isTurnDown=false;
         direction="right";
         
+        msgLifes=new Counter();
+        msgScore=new Counter("Score:");
+        countLifes=new CounterLifes();
+    
         countMoveRight=0;
         countMoveLeft=0;
         countJumpLeft=0;
     }
     
+    public int getScore()
+    {
+        return score;
+    }
+    
     public void act() 
     {
         // Add your action code here.
+        getWorld().addObject(msgScore,400,30);
+        getWorld().addObject(countLifes,50, 30);
+        getWorld().addObject(msgLifes,120,30);
+        
+        isTurnDown=false;
+        msgScore.setValue(score);
+        msgLifes.setValue(lifes);
+ 
         if(Greenfoot.isKeyDown("right"))
         {
             isDirectionRight=true;
@@ -215,7 +236,11 @@ public class Player extends Actor
                 }
                 
                 getWorld().addObject(aSnowBall,getX()-20,getY());
-                aSnowBall.shootLeft();
+            }
+            
+            if(aSnowBall.shootPredator()==true)
+            {
+                score++;
             }
         }
         
@@ -230,6 +255,12 @@ public class Player extends Actor
                 setLocation(getX(),550);
                 setImage(walkRight1);
             }
+        }
+        
+        if(isTouching(Predator.class))
+        {
+            setLocation(100,550);
+            lifes--;
         }
     }
     

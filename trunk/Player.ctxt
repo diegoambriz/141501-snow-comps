@@ -2,9 +2,11 @@
 comment0.params=
 comment0.target=Player()
 comment1.params=
-comment1.target=void\ act()
+comment1.target=int\ getScore()
 comment2.params=
-comment2.target=boolean\ isAtEdge()
+comment2.target=void\ act()
 comment3.params=
-comment3.target=java.lang.String\ getDirection()
-numComments=4
+comment3.target=boolean\ isAtEdge()
+comment4.params=
+comment4.target=java.lang.String\ getDirection()
+numComments=5
