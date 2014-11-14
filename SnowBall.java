@@ -14,7 +14,7 @@ public class SnowBall extends Actor
      */
     private String shootDirection;
     private boolean target;
-    
+
     public SnowBall(String aDirection)
     {
         shootDirection=aDirection;
@@ -33,17 +33,16 @@ public class SnowBall extends Actor
             setLocation(getX()-10,getY());
         }
         
-        if(isAtEdge() && target==false || isTouching(Predator.class))
+        if(isAtEdge())
         {
-            target=true;
             getWorld().removeObject(this);
         }
         
-        /*if(isTouching(Predator.class))
-        {
-            target=true;
-            getWorld().removeObject(this);
-        }*/
+        //if(isTouching(Predator.class))
+        //{
+          //  target=true;
+           // getWorld().removeObject(this);
+        //}
     }
     
     public boolean isShoot()
