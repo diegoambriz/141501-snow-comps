@@ -33,6 +33,7 @@ public class Finn extends Enemy
     private String direction;
     private int health;
     public boolean dead;
+    
     public Finn()
     {
         moveRight=new GreenfootImage[5];
@@ -55,7 +56,7 @@ public class Finn extends Enemy
         
         countMoveRight=0;
         countMoveLeft=0;
-        health=0;
+        health=3;
         dead=false;
     }
     

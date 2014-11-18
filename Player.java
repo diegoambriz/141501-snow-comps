@@ -19,10 +19,13 @@ public class Player extends Actor
     private GreenfootImage []jumpDown;
     private GreenfootImage []shootRight;
     private GreenfootImage []shootLeft;
+    private GreenfootImage []dead;
     
     private Counter msgScore;
     private Counter msgLifes;
     private CounterLifes countLifes;
+    
+    private SimpleTimer playerTimer;
     
     private GreenfootImage walkRight1 =new GreenfootImage("nickRight1.png");
     private GreenfootImage walkRight2 =new GreenfootImage("nickRight2.png");
@@ -58,11 +61,23 @@ public class Player extends Actor
     private GreenfootImage shootLeft2=new GreenfootImage("shootLeft2.png");
     private GreenfootImage shootLeft3=new GreenfootImage("shootLeft3.png");
     
+    private GreenfootImage dead1=new GreenfootImage("dead1.png");
+    private GreenfootImage dead2=new GreenfootImage("dead2.png");
+    private GreenfootImage dead3=new GreenfootImage("dead3.png");
+    private GreenfootImage dead4=new GreenfootImage("dead4.png");
+    private GreenfootImage dead5=new GreenfootImage("dead5.png");
+    private GreenfootImage dead6=new GreenfootImage("dead6.png");
+    private GreenfootImage dead7=new GreenfootImage("dead7.png");
+    private GreenfootImage dead8=new GreenfootImage("nickRight1.png");
+    
     private int score=0;
     private int lifes=3;
     
     private boolean isDirectionRight;
     private boolean isTurnDown;
+    private boolean aKeyDown;
+    private boolean upKeyDown;
+    
     private String direction;
     
     private int countMoveRight;
@@ -79,6 +94,7 @@ public class Player extends Actor
         jumpDown=new GreenfootImage[3];
         shootRight=new GreenfootImage[3];
         shootLeft=new GreenfootImage[3];
+        dead=new GreenfootImage[8];
         
         moveRight[0]=walkRight1;
         moveRight[1]=walkRight2;
@@ -114,17 +130,31 @@ public class Player extends Actor
         shootLeft[1]=shootLeft2;
         shootLeft[2]=shootLeft3;
         
+        dead[0]=dead1;
+        dead[1]=dead2;
+        dead[2]=dead3;
+        dead[3]=dead4;
+        dead[4]=dead5;
+        dead[5]=dead6;
+        dead[6]=dead7;
+        dead[7]=dead8;
+        
         isDirectionRight=true;
         isTurnDown=false;
+        aKeyDown=false;
+        upKeyDown=false;
         direction="right";
         
         msgLifes=new Counter();
         msgScore=new Counter("Score:");
         countLifes=new CounterLifes();
+        playerTimer=new SimpleTimer();
     
         countMoveRight=0;
         countMoveLeft=0;
         countJumpLeft=0;
+        
+        //playerTimer.mark();
     }
     
     public int getScore()
@@ -134,7 +164,6 @@ public class Player extends Actor
     
     public void act() 
     {
-        // Add your action code here.
         getWorld().addObject(msgScore,400,30);
         getWorld().addObject(countLifes,50, 30);
         getWorld().addObject(msgLifes,120,30);
@@ -143,6 +172,12 @@ public class Player extends Actor
         msgScore.setValue(score);
         msgLifes.setValue(lifes);
         
+        if(playerTimer.millisElapsed()>=400)
+        {
+            playerTimer.mark();
+            aKeyDown=false;
+            upKeyDown=false;
+        }
         
         if(lifes==0)
         {
@@ -153,6 +188,7 @@ public class Player extends Actor
         {
             isDirectionRight=true;
             direction="right";
+            aKeyDown=true;
             
             if(countMoveRight>2)
             {
@@ -166,11 +202,12 @@ public class Player extends Actor
                 countMoveRight++;
             }
         }
-        
-        if(Greenfoot.isKeyDown("left"))
+  
+        if(Greenfoot.isKeyDown("left") && isTouching(BlockBorder.class)!=true)
         {
             isDirectionRight=false;
             direction="left";
+            aKeyDown=true;
             
             if(countMoveLeft>2)
             {
@@ -185,8 +222,16 @@ public class Player extends Actor
             }
         }
         
-        if(Greenfoot.isKeyDown("up"))
+        if (isTouching(BlockBorder.class))
         {
+            setLocation(getX(),getY()+10);
+        }
+        
+        if(Greenfoot.isKeyDown("up") && upKeyDown==false && aKeyDown==false && isTouching(BlockBorder.class)!=true)
+        {
+            aKeyDown=true;
+            upKeyDown=true;
+            
             if(isDirectionRight!=true)
             {
                 for(int i=0;i<6;i++)
@@ -208,16 +253,17 @@ public class Player extends Actor
             }
         }
         
-        if(Greenfoot.isKeyDown("down"))
+        /*if(Greenfoot.isKeyDown("down"))
         {
             setLocation(getX(),getY()+15);
         }
-        
-        if(Greenfoot.isKeyDown("Enter") && isTurnDown==false)
+        */
+       
+        if(Greenfoot.isKeyDown("Enter") && isTurnDown==false && aKeyDown==false)
         {
             SnowBall aSnowBall;
+            aKeyDown=true;
             
-             
             if(isDirectionRight==true)
             {
                 aSnowBall=new SnowBall("right");
@@ -265,8 +311,18 @@ public class Player extends Actor
         
         if(isTouching(Predator.class)|| isTouching(Finn.class))
         {
+            for(int i=0;i<8;i++)
+            {
+                    Greenfoot.delay(2);
+                    setImage(dead[i]);
+            }
             setLocation(100,550);
             lifes--;
+        }
+        
+        if(isTouching(Ipod.class))
+        {
+            score+=100;
         }
     }
     

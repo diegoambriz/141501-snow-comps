@@ -25,12 +25,12 @@ public class SnowBall extends Actor
     {
         if(shootDirection=="right")
         {
-            setLocation(getX()+10,getY());
+            setLocation(getX()+25,getY());
         }
         
         else
         {
-            setLocation(getX()-10,getY());
+            setLocation(getX()-25,getY());
         }
         
         if(isAtEdge())

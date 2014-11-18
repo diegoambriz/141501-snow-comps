@@ -32,6 +32,10 @@ public class Predator extends Enemy
     
     private int health;
     private boolean dead;
+    private int posxBonus;
+    private int posyBonus;
+    
+    private Ipod ipod;
     
     public Predator()
     {
@@ -54,6 +58,8 @@ public class Predator extends Enemy
         direction="Right";
         dead=false;
         health=3;
+  
+        ipod=new Ipod();
     }
     
     public void act() 
@@ -101,7 +107,6 @@ public class Predator extends Enemy
        if(health==0)
        {
            this.dead=true;
-           System.out.println("Dead");
        }
     }
     
