@@ -13,6 +13,10 @@ public class SnowCompsWorld extends World
     
     private Finn finn1,finn2,finn3;
     private Predator predator1,predator2,predator3;
+    private Ipod ipod; 
+    
+    private int posX;
+    private int posY;
     GreenfootSound backgroundMusic = new GreenfootSound("Main Theme Snow-Comps.mp3");
     /**
      * Constructor for objects of class SnowCompsWorld.
@@ -26,7 +30,7 @@ public class SnowCompsWorld extends World
         clock= new SimpleTimer();
         msgTimer= new Counter("Time:");
         
-        msgTimer.setValue(60);
+        msgTimer.setValue(59);
         addObject(msgTimer,730,30);
         clock.mark();
         
@@ -34,7 +38,7 @@ public class SnowCompsWorld extends World
         Player player1;
         player1=new Player();
         
-        
+        ipod=new Ipod();
         
         finn1=new Finn();
         finn2=new Finn();
@@ -46,12 +50,12 @@ public class SnowCompsWorld extends World
         
         addObject(player1,100,550);
         
-        addObject(finn1,594,405);
-        addObject(finn2,594,256);
+        addObject(finn1,270,405);
+        addObject(finn2,440,256);
         addObject(finn3,594,106);
         
-        addObject(predator1,190,471);
-        addObject(predator2,190,328);
+        addObject(predator1,440,471);
+        addObject(predator2,360,328);
         addObject(predator3,190,179);
         
         Plattaform1 plattaform1;
@@ -78,11 +82,15 @@ public class SnowCompsWorld extends World
         addObject(plattaform5,300,291);
         addObject(plattaform6,130,218);
         addObject(plattaform7,300,145);
+        
+        posX=predator1.getX();
+        posY=predator1.getY();
     }
     
     public void act()
     {
         backgroundMusic.playLoop();
+        
         if(clock.millisElapsed()>=1000)
         {
             clock.mark();
@@ -91,7 +99,13 @@ public class SnowCompsWorld extends World
         
         if(predator1.isDead()==true)
         {
+            addObject(ipod,posX,posY);
             removeObject(predator1);
+        }
+        
+        if(ipod.GetIpod()==true)
+        {
+            removeObject(ipod);
         }
         
         if(predator2.isDead()==true)
