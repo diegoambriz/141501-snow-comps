@@ -13,11 +13,15 @@ public class SnowCompsWorld extends World
     
     private Finn finn1,finn2,finn3;
     private Predator predator1,predator2,predator3;
-    private Ipod ipod; 
+    private Ipod ipod2; 
     
     private int posX;
     private int posY;
+    private boolean predatorDead;
     GreenfootSound backgroundMusic = new GreenfootSound("Main Theme Snow-Comps.mp3");
+    
+    private SimpleTimer ipodTimer;
+    
     /**
      * Constructor for objects of class SnowCompsWorld.
      * 
@@ -26,6 +30,8 @@ public class SnowCompsWorld extends World
     {    
         // Create a new world with 800x600 cells with a cell size of 1x1 pixels.
         super(790, 600, 1);
+        
+        predatorDead=false;
         
         clock= new SimpleTimer();
         msgTimer= new Counter("Time:");
@@ -38,7 +44,7 @@ public class SnowCompsWorld extends World
         Player player1;
         player1=new Player();
         
-        ipod=new Ipod();
+        ipod2=new Ipod();
         
         finn1=new Finn();
         finn2=new Finn();
@@ -85,6 +91,9 @@ public class SnowCompsWorld extends World
         
         posX=predator1.getX();
         posY=predator1.getY();
+        
+        //ipod2=new Ipod();
+        ipodTimer=new SimpleTimer();
     }
     
     public void act()
@@ -99,13 +108,27 @@ public class SnowCompsWorld extends World
         
         if(predator1.isDead()==true)
         {
-            addObject(ipod,posX,posY);
+            addObject(ipod2,posX,posY);
             removeObject(predator1);
+           
+            predator1.setDead(false);
+            predatorDead=true;
+            
         }
         
-        if(ipod.GetIpod()==true)
+        if(predatorDead==true)
         {
-            removeObject(ipod);
+            ipodTimer.mark();
+        }
+        
+        if(ipodTimer.millisElapsed()>=5000 && predatorDead==true)
+        {
+            removeObject(ipod2);
+        }
+        
+        if(ipod2.GetIpod()==true)
+        {
+            removeObject(ipod2);
         }
         
         if(predator2.isDead()==true)

@@ -19,6 +19,7 @@ public class Ipod extends Bonus
     {
         isIpod=false;
         ipodTimer=new SimpleTimer();
+        ipodTimer.mark();
     }
     
     public void act() 
@@ -26,11 +27,11 @@ public class Ipod extends Bonus
         // Add your action code here.
         
         
-        if(this.ipodTimer.millisElapsed()>=5000)
+        /*if(this.ipodTimer.millisElapsed()>=10000)
         {
-            //ipodTimer.mark();
+            ipodTimer.mark();
             isIpod=true;
-        }
+        }*/
         
         if(isTouching(Player.class))
         {

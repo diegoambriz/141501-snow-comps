@@ -124,4 +124,9 @@ public class Predator extends Enemy
            return false;*/
        return dead;
     }
+    
+    public void setDead(boolean isDead)
+    {
+        dead=isDead;
+    }
 }
