@@ -309,7 +309,7 @@ public class Player extends Actor
             }
         }
         
-        if(isTouching(Predator.class)|| isTouching(Finn.class))
+        if(isTouching(Predator.class))//|| isTouching(Finn.class))
         {
             for(int i=0;i<8;i++)
             {
@@ -319,6 +319,8 @@ public class Player extends Actor
             setLocation(100,550);
             lifes--;
         }
+        
+       
         
         if(isTouching(Ipod.class))
         {
