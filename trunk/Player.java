@@ -153,8 +153,6 @@ public class Player extends Actor
         countMoveRight=0;
         countMoveLeft=0;
         countJumpLeft=0;
-        
-        //playerTimer.mark();
     }
     
     public int getScore()
@@ -164,9 +162,9 @@ public class Player extends Actor
     
     public void act() 
     {
-        getWorld().addObject(msgScore,400,30);
-        getWorld().addObject(countLifes,50, 30);
-        getWorld().addObject(msgLifes,120,30);
+        getWorld().addObject(msgScore,400,25);
+        getWorld().addObject(countLifes,50, 25);
+        getWorld().addObject(msgLifes,120,25);
         
         isTurnDown=false;
         msgScore.setValue(score);
@@ -184,7 +182,7 @@ public class Player extends Actor
             Greenfoot.stop();
         }
         
-        if(Greenfoot.isKeyDown("right"))
+        if(Greenfoot.isKeyDown("right") && isTouching(Block.class)) //&&  isTouching(BlockTop.class)!=true)
         {
             isDirectionRight=true;
             direction="right";
@@ -203,7 +201,7 @@ public class Player extends Actor
             }
         }
   
-        if(Greenfoot.isKeyDown("left") && isTouching(BlockBorder.class)!=true)
+        if(Greenfoot.isKeyDown("left") && isTouching(Block.class) && isTouching(BlockTop.class)!=true)//&& isTouching(BlockDown.class)!=true)
         {
             isDirectionRight=false;
             direction="left";
@@ -222,43 +220,48 @@ public class Player extends Actor
             }
         }
         
-        if (isTouching(BlockBorder.class))
+        if(Greenfoot.isKeyDown("up") && isTouching(Block.class))// && upKeyDown==false && aKeyDown==false)// && isTouching(BlockDown.class)!=true)
         {
-            setLocation(getX(),getY()+10);
-        }
-        
-        if(Greenfoot.isKeyDown("up") && upKeyDown==false && aKeyDown==false && isTouching(BlockBorder.class)!=true)
-        {
-            aKeyDown=true;
-            upKeyDown=true;
+            //aKeyDown=true;
+            //upKeyDown=true;
             
             if(isDirectionRight!=true)
             {
                 for(int i=0;i<6;i++)
                 {
+                    
                     Greenfoot.delay(1);
-                    setLocation(getX(),getY()-12);
+                    setLocation(getX(),getY()-16);
                     setImage(jumpLeft[i]);
                 }
             }
             
             else
             {
-                for(int i=0;i<6;i++)
+                for(int j=0;j<6;j++)
                 {
                     Greenfoot.delay(1);
-                    setLocation(getX(),getY()-12);
-                    setImage(jumpRight[i]);
+                    setLocation(getX(),getY()-16);
+                    setImage(jumpRight[j]);
                 }
+            }
+            
+            if(isTouching(Block.class)!=true)
+            {
+                setLocation(getX(),getY()+10);
             }
         }
         
-        /*if(Greenfoot.isKeyDown("down"))
+        if(isTouching(Block.class)!=true)
         {
-            setLocation(getX(),getY()+15);
+            setLocation(getX(),getY()+10);
+            
+            if(getY()>=550)
+            {
+                setLocation(getX(),550);
+            }
         }
-        */
-       
+        
         if(Greenfoot.isKeyDown("Enter") && isTurnDown==false && aKeyDown==false)
         {
             SnowBall aSnowBall;
@@ -289,27 +292,35 @@ public class Player extends Actor
                 
                 getWorld().addObject(aSnowBall,getX()-20,getY());
             }
-            
-            if(aSnowBall.shootPredator()==true)
-            {
-                score++;
-            }
         }
         
-        if(isTouching(Block.class)!=true && getY()<550)
+        /*if(isTouching(Block.class)!=true && getY()<550)
         {
             isTurnDown=true;
             setLocation(getX(),getY()+10);
+            
+            setImage(jumpDown[0]);
             setImage(jumpDown[1]);
+            
+            
             
             if(getY()>500)
             {
                 setLocation(getX(),550);
-                setImage(walkRight1);
+                
+                if(isDirectionRight==true)
+                {
+                    setImage(walkRight1);
+                }
+                
+                else
+                {
+                    setImage(walkLeft1);
+                }
             }
-        }
+        }*/
         
-        if(isTouching(Predator.class))//|| isTouching(Finn.class))
+        if(isTouching(Predator.class)|| isTouching(Finn.class) || isTouching(Ghost.class))
         {
             for(int i=0;i<8;i++)
             {
@@ -319,9 +330,7 @@ public class Player extends Actor
             setLocation(100,550);
             lifes--;
         }
-        
-       
-        
+
         if(isTouching(Ipod.class))
         {
             score+=100;

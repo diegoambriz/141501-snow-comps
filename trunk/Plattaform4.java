@@ -13,14 +13,28 @@ public class Plattaform4 extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     private Block [] array;
+    private BlockTop [] array2;
+    private BlockBottom [] array3;
     
     public Plattaform4()
     {
-       array= new Block[25];
+       array = new Block[20];
+       array2 = new BlockTop[4];
+       array3 = new BlockBottom[2];
        
-       for(int i=0;i<25;i++)
+       for(int i=0;i<20;i++)
        {
            array[i]=new Block();
+       }
+       
+       for(int i=0;i<4;i++)
+       {
+           array2[i]=new BlockTop();
+       }
+       
+       for(int i=0;i<2;i++)
+       {
+           array3[i]=new BlockBottom();
        }
     }
     
@@ -31,29 +45,26 @@ public class Plattaform4 extends Actor
     
     protected void addedToWorld(World world)
     {
-        getWorld().addObject(array[0], getX(), getY());
-        getWorld().addObject(array[1], getX()+30, getY());
-        getWorld().addObject(array[2], getX()+30, getY()-30);
-        getWorld().addObject(array[3], getX(), getY()-30);
-        getWorld().addObject(array[4], getX()+30, getY()-60);
-        getWorld().addObject(array[5], getX(), getY()-60);
-        getWorld().addObject(array[6], getX()+30, getY());
-        getWorld().addObject(array[7], getX()+60, getY());
-        getWorld().addObject(array[8], getX()+90, getY());
-        getWorld().addObject(array[9], getX()+120, getY());
-        getWorld().addObject(array[10], getX()+150, getY());
-        getWorld().addObject(array[11], getX()+180, getY());
-        getWorld().addObject(array[12], getX()+210, getY());
-        getWorld().addObject(array[13], getX()+240, getY());
-        getWorld().addObject(array[14], getX()+270, getY());
-        getWorld().addObject(array[15], getX()+300, getY());
-        getWorld().addObject(array[16], getX()+330, getY());
-        getWorld().addObject(array[17], getX()+360, getY());
-        getWorld().addObject(array[18], getX()+390, getY());
-        /*getWorld().addObject(array[19], getX()+410, getY());
-        getWorld().addObject(array[20], getX()+440, getY());
-        getWorld().addObject(array[21], getX()+470, getY());
-        getWorld().addObject(array[22], getX()+500, getY());
-        getWorld().addObject(array[23], getX()+530, getY());*/
+        getWorld().addObject(array2[0],getX(),getY()-60); //BlockTop Left
+        getWorld().addObject(array2[1],getX()+30,getY()-60);//BlockTop Right
+        
+        getWorld().addObject(array2[2],getX(),getY()-30); //BlockTop Left
+        getWorld().addObject(array2[3],getX()+30,getY()-30);//BlockTop Right
+        
+        getWorld().addObject(array3[0],getX(),getY());//BlockBottom Left
+        getWorld().addObject(array3[1],getX()+30,getY());//BlockBottom Right
+        
+        getWorld().addObject(array[0],getX()+60,getY());//Block
+        getWorld().addObject(array[1],getX()+90,getY());//Block
+        getWorld().addObject(array[2],getX()+120,getY());//Block
+        getWorld().addObject(array[3],getX()+150,getY());//Block
+        getWorld().addObject(array[4],getX()+180,getY());//Block
+        getWorld().addObject(array[5],getX()+210,getY());//Block
+        getWorld().addObject(array[6],getX()+240,getY());//Block
+        getWorld().addObject(array[7],getX()+270,getY());//Block
+        getWorld().addObject(array[8],getX()+300,getY());//Block
+        getWorld().addObject(array[9],getX()+330,getY());//Block
+        getWorld().addObject(array[10],getX()+360,getY());//Block
+        getWorld().addObject(array[11],getX()+390,getY());//Block
     }
 }
