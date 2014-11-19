@@ -37,7 +37,7 @@ public class SnowCompsWorld extends World
         msgTimer= new Counter("Time:");
         
         msgTimer.setValue(59);
-        addObject(msgTimer,730,30);
+        addObject(msgTimer,730,25);
         clock.mark();
         
         
@@ -56,13 +56,13 @@ public class SnowCompsWorld extends World
         
         addObject(player1,100,550);
         
-        addObject(finn1,270,405);
-        addObject(finn2,440,256);
-        addObject(finn3,594,106);
+        addObject(finn1,270,360);
+        addObject(finn2,440,168);
+        //addObject(finn3,594,106);
         
-        addObject(predator1,440,471);
-        addObject(predator2,360,328);
-        addObject(predator3,190,179);
+        addObject(predator1,525,450);
+        addObject(predator2,360,262);
+        addObject(predator3,190,75);
         
         Plattaform1 plattaform1;
         Plattaform2 plattaform2;
@@ -82,13 +82,17 @@ public class SnowCompsWorld extends World
         plattaform7=new Plattaform3();
         
         addObject(plattaform1,15,584);
-        addObject(plattaform2,130,510);
-        addObject(plattaform3,300,440);
-        addObject(plattaform4,130,367);//
+        addObject(plattaform2,130,490);
+        addObject(plattaform3,280,396);
+        addObject(plattaform4,130,302);//
+        addObject(plattaform5,280,208);
+        addObject(plattaform6,130,114);
+        /*
         addObject(plattaform5,300,291);
         addObject(plattaform6,130,218);
         addObject(plattaform7,300,145);
-        
+        */
+       
         posX=predator1.getX();
         posY=predator1.getY();
         
@@ -98,7 +102,7 @@ public class SnowCompsWorld extends World
     
     public void act()
     {
-        backgroundMusic.playLoop();
+        //backgroundMusic.playLoop();
         
         if(clock.millisElapsed()>=1000)
         {
@@ -119,13 +123,9 @@ public class SnowCompsWorld extends World
         if(predatorDead==true)
         {
             ipodTimer.mark();
+            ipod2.setIpod(true);
         }
-        
-        if(ipodTimer.millisElapsed()>=5000 && predatorDead==true)
-        {
-            removeObject(ipod2);
-        }
-        
+    
         if(ipod2.GetIpod()==true)
         {
             removeObject(ipod2);
@@ -141,6 +141,7 @@ public class SnowCompsWorld extends World
             removeObject(predator3);
         }
         
+        
         if(finn1.isDead()==true)
         {
             removeObject(finn1);
@@ -155,5 +156,10 @@ public class SnowCompsWorld extends World
         {
             removeObject(finn3);
         }
-    } 
+    }
+    
+    public void stopped()
+    {
+        backgroundMusic.stop();
+    }
 }

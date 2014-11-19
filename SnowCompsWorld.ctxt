@@ -4,4 +4,6 @@ comment0.target=SnowCompsWorld()
 comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ SnowCompsWorld.\r\n\ \r\n
 comment1.params=
 comment1.target=void\ act()
-numComments=2
+comment2.params=
+comment2.target=void\ stopped()
+numComments=3

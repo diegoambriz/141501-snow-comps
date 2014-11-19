@@ -13,6 +13,7 @@ public class Ipod extends Bonus
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     private boolean isIpod;
+    private boolean isDead;
     private SimpleTimer ipodTimer;
     
     public Ipod()
@@ -20,6 +21,7 @@ public class Ipod extends Bonus
         isIpod=false;
         ipodTimer=new SimpleTimer();
         ipodTimer.mark();
+        isDead=false;
     }
     
     public void act() 
@@ -27,6 +29,14 @@ public class Ipod extends Bonus
         // Add your action code here.
         
         
+        if(isDead==true)
+        {
+            ipodTimer.mark();
+            if(ipodTimer.millisElapsed()>=10000)
+            {
+                getWorld().removeObject(this);
+            }
+        }
         /*if(this.ipodTimer.millisElapsed()>=10000)
         {
             ipodTimer.mark();
@@ -37,6 +47,11 @@ public class Ipod extends Bonus
         {
             isIpod=true;
         }
+    }
+    
+    public void setIpod(boolean dead)
+    {
+        isDead=dead;
     }
     
     public boolean GetIpod()
