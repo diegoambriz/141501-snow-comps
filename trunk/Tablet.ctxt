@@ -1,5 +1,10 @@
 #BlueJ class context
 comment0.params=
-comment0.target=void\ act()
-comment0.text=\r\n\ Act\ -\ do\ whatever\ the\ Tablet\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
-numComments=1
+comment0.target=Tablet()
+comment1.params=
+comment1.target=void\ act()
+comment2.params=dead
+comment2.target=void\ setTablet(boolean)
+comment3.params=
+comment3.target=boolean\ GetTablet()
+numComments=4

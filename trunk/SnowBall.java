@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class SnowBall here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Diego Alfonso Ambriz Martinez 
+ * @version 20-11-2014
  */
 public class SnowBall extends Actor
 {
@@ -33,7 +33,7 @@ public class SnowBall extends Actor
             setLocation(getX()-25,getY());
         }
         
-        if(isAtEdge())
+        if(isAtEdge()|| isTouching(BlockLeft.class) || isTouching(BlockRight.class))
         {
             getWorld().removeObject(this);
         }

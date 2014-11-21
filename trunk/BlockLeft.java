@@ -1,18 +1,18 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class BlockBorder here.
+ * Write a description of class BlockTop here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Diego Alfonso Ambriz Martinez 
+ * @version 20-11-2014
  */
-public class BlockBorder extends Actor
+public class BlockLeft extends Actor
 {
     /**
-     * Act - do whatever the BlockBorder wants to do. This method is called whenever
+     * Act - do whatever the BlockTop wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    public BlockBorder()
+    public BlockLeft()
     {
         dibujar();
     }

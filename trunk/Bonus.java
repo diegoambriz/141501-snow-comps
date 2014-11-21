@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Bonus here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Diego Alfonso Ambriz Martinez 
+ * @version 20-11-2014
  */
 public class Bonus extends Actor
 {
