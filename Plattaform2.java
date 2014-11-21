@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Plattaform1 here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Diego Alfonso Ambriz Martinez 
+ * @version 20-11-2014
  */
 public class Plattaform2 extends Actor
 {
@@ -14,28 +14,35 @@ public class Plattaform2 extends Actor
      */
     
     private Block [] array;
-    private BlockTop [] array2;
-    private BlockBottom [] array3;
+    private BlockLeft [] array2;
+    private BlockRight [] array3;
+    private BlockBottom [] array4;
     
     public Plattaform2()
     {
        array= new Block[20];
-       array2= new BlockTop[4];
-       array3= new BlockBottom[2];
+       array2= new BlockLeft[2];
+       array3= new BlockRight[2];
+       array4= new BlockBottom[2];
        
        for(int i=0;i<20;i++)
        {
            array[i]=new Block();
        }
        
-       for(int j=0;j<4;j++)
+       for(int j=0;j<2;j++)
        {
-           array2[j]=new BlockTop();
+           array2[j]=new BlockLeft();
        }
        
        for(int k=0;k<2;k++)
        {
-           array3[k]=new BlockBottom();
+           array3[k]=new BlockRight();
+       }
+       
+       for(int l=0;l<2;l++)
+       {
+           array4[l]=new BlockBottom();
        }
     }
     
@@ -46,14 +53,14 @@ public class Plattaform2 extends Actor
     
     protected void addedToWorld(World world)
     {
-        getWorld().addObject(array2[0],getX(),getY()-60); //BlockTop Left
-        getWorld().addObject(array2[1],getX()+30,getY()-60);//BlockTop Right
+        getWorld().addObject(array3[0],getX(),getY()-60); //BlockRight
+        getWorld().addObject(array2[0],getX()+30,getY()-60);//BlockLeft
         
-        getWorld().addObject(array2[2],getX(),getY()-30); //BlockTop Left
-        getWorld().addObject(array2[3],getX()+30,getY()-30);//BlockTop Right
+        getWorld().addObject(array3[1],getX(),getY()-30); //BlockRight
+        getWorld().addObject(array2[1],getX()+30,getY()-30);//BlockLeft
         
-        getWorld().addObject(array3[0],getX(),getY());//BlockBottom Left
-        getWorld().addObject(array3[1],getX()+30,getY());//BlockBottom Right
+        getWorld().addObject(array4[0],getX(),getY());//BlockBottom Left
+        getWorld().addObject(array4[1],getX()+30,getY());//BlockBottom Right
         
         getWorld().addObject(array[0],getX()+60,getY());//Block
         getWorld().addObject(array[1],getX()+90,getY());//Block

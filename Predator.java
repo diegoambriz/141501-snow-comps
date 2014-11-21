@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Cat here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Diego Alfonso Ambriz Martinez 
+ * @version 20-11-2014
  */
 public class Predator extends Enemy
 {
@@ -25,17 +25,13 @@ public class Predator extends Enemy
     private GreenfootImage walkLeft3=new GreenfootImage("predatorLeft3.png");
     private GreenfootImage walkLeft4=new GreenfootImage("predatorLeft4.png");
     
-    private boolean isDirectionRight;
+    
     private int countMoveRight;
     private int countMoveLeft;
     private String direction;
     
     private int health;
     private boolean dead;
-    private int posxBonus;
-    private int posyBonus;
-    
-    private Ipod ipod;
     
     public Predator()
     {
@@ -52,29 +48,30 @@ public class Predator extends Enemy
         moveLeft[2]=walkLeft3;
         moveLeft[3]=walkLeft4;
         
-        isDirectionRight=true;
         countMoveRight=0;
         countMoveLeft=0;
+        
         direction="Right";
+        
         dead=false;
         health=3;
-  
-        ipod=new Ipod();
     }
     
     public void act() 
     {
-       if(getX()<190)
-       {
-           direction="Right";
-       }
-       
-       if(getX()>525)
+       //if(getX()<190)
+       if(isTouching(Block.class)!=true)
        {
            direction="Left";
        }
+       
+       //if(getX()>525)
+       if(isTouching(BlockLeft.class) && isTouching(Block.class))
+       {
+           direction="Right";
+       }
         
-       if(direction=="Left")
+       if(direction=="Left")// && isTouching(Block.class))
        {
            if(countMoveLeft>3)
            {
@@ -86,7 +83,7 @@ public class Predator extends Enemy
            countMoveLeft++;
        }
        
-       if(direction=="Right")
+       if(direction=="Right")// && isTouching(Block.class))
        {
            if(countMoveRight>3)
            {
@@ -112,16 +109,6 @@ public class Predator extends Enemy
     
     public boolean isDead()
     {
-       /*if(health==0)
-       {
-           return true;
-           //setLocation(1000,0);
-           
-           //getWorld().removeObject(this);
-       }
-       
-       else
-           return false;*/
        return dead;
     }
     

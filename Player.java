@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Player here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Diego Alfonso Ambriz Martinez 
+ * @version 20-11-2014
  */
 public class Player extends Actor
 {
@@ -24,6 +24,7 @@ public class Player extends Actor
     private Counter msgScore;
     private Counter msgLifes;
     private CounterLifes countLifes;
+    private int enemies;
     
     private SimpleTimer playerTimer;
     
@@ -69,6 +70,11 @@ public class Player extends Actor
     private GreenfootImage dead6=new GreenfootImage("dead6.png");
     private GreenfootImage dead7=new GreenfootImage("dead7.png");
     private GreenfootImage dead8=new GreenfootImage("nickRight1.png");
+    
+    private GreenfootSound jump=new GreenfootSound("jump.mp3");
+    private GreenfootSound bonus=new GreenfootSound("bonus.mp3");
+    private GreenfootSound shoot=new GreenfootSound("shoot.wav");
+    private GreenfootSound deadSound=new GreenfootSound("dead.mp3");
     
     private int score=0;
     private int lifes=3;
@@ -139,6 +145,7 @@ public class Player extends Actor
         dead[6]=dead7;
         dead[7]=dead8;
         
+        enemies=5;
         isDirectionRight=true;
         isTurnDown=false;
         aKeyDown=false;
@@ -170,6 +177,11 @@ public class Player extends Actor
         msgScore.setValue(score);
         msgLifes.setValue(lifes);
         
+        if(enemies==0)
+        {
+            Greenfoot.stop();
+        }
+        
         if(playerTimer.millisElapsed()>=400)
         {
             playerTimer.mark();
@@ -182,7 +194,7 @@ public class Player extends Actor
             Greenfoot.stop();
         }
         
-        if(Greenfoot.isKeyDown("right") && isTouching(Block.class)) //&&  isTouching(BlockTop.class)!=true)
+        if(Greenfoot.isKeyDown("right") && isTouching(Block.class) && isTouching(BlockRight.class)!=true)
         {
             isDirectionRight=true;
             direction="right";
@@ -193,15 +205,18 @@ public class Player extends Actor
                 countMoveRight=0;
             }
             
-            if(getX()<770 && isTouching(Block.class))
+            if(getX()<=770 && isTouching(Block.class)&& isTouching(BlockRight.class)!=true)
             {
-                setLocation(getX()+5,getY());
-                setImage(moveRight[countMoveRight]);
-                countMoveRight++;
+                if(Greenfoot.isKeyDown("right"))
+                {
+                    setLocation(getX()+5,getY());
+                    setImage(moveRight[countMoveRight]);
+                    countMoveRight++;
+                }
             }
         }
   
-        if(Greenfoot.isKeyDown("left") && isTouching(Block.class) && isTouching(BlockTop.class)!=true)//&& isTouching(BlockDown.class)!=true)
+        if(Greenfoot.isKeyDown("left") && isTouching(Block.class) && isTouching(BlockLeft.class)!=true)
         {
             isDirectionRight=false;
             direction="left";
@@ -212,11 +227,14 @@ public class Player extends Actor
                 countMoveLeft=0;
             }
             
-            if(getX()>20 && isTouching(Block.class))
+            if(getX()>20 && isTouching(Block.class)&& isTouching(BlockLeft.class)!=true)
             {
-                setLocation(getX()-5,getY());
-                setImage(moveLeft[countMoveLeft]);
-                countMoveLeft++;
+                if(Greenfoot.isKeyDown("left"))
+                {
+                    setLocation(getX()-5,getY());
+                    setImage(moveLeft[countMoveLeft]);
+                    countMoveLeft++;
+                }
             }
         }
         
@@ -225,11 +243,12 @@ public class Player extends Actor
             //aKeyDown=true;
             //upKeyDown=true;
             
+            
             if(isDirectionRight!=true)
             {
+                jump.play();
                 for(int i=0;i<6;i++)
                 {
-                    
                     Greenfoot.delay(1);
                     setLocation(getX(),getY()-16);
                     setImage(jumpLeft[i]);
@@ -238,6 +257,7 @@ public class Player extends Actor
             
             else
             {
+                jump.play();
                 for(int j=0;j<6;j++)
                 {
                     Greenfoot.delay(1);
@@ -248,6 +268,7 @@ public class Player extends Actor
             
             if(isTouching(Block.class)!=true)
             {
+                setImage(jumpDown[1]);
                 setLocation(getX(),getY()+10);
             }
         }
@@ -258,12 +279,14 @@ public class Player extends Actor
             
             if(getY()>=550)
             {
+                setImage(jumpDown[1]);
                 setLocation(getX(),550);
             }
         }
         
         if(Greenfoot.isKeyDown("Enter") && isTurnDown==false && aKeyDown==false)
         {
+            shoot.play();
             SnowBall aSnowBall;
             aKeyDown=true;
             
@@ -322,6 +345,7 @@ public class Player extends Actor
         
         if(isTouching(Predator.class)|| isTouching(Finn.class) || isTouching(Ghost.class))
         {
+            deadSound.play();
             for(int i=0;i<8;i++)
             {
                     Greenfoot.delay(2);
@@ -331,9 +355,25 @@ public class Player extends Actor
             lifes--;
         }
 
+        if(isTouching(Usb.class))
+        {
+            bonus.play();
+            score+=100;
+            enemies--;
+        }
+        
         if(isTouching(Ipod.class))
         {
-            score+=100;
+            bonus.play();
+            score+=300;
+            enemies--;
+        }
+        
+        if(isTouching(Tablet.class))
+        {
+            bonus.play();
+            score+=500;
+            enemies--;
         }
     }
     
@@ -347,11 +387,12 @@ public class Player extends Actor
         if(getX()-myImage.getWidth()/2<=1 || getX()+myImage.getWidth()>=myWorld.getWidth())
         return(true);
         
-        if(getY()-myImage.getHeight()<=1 || getY()+myImage.getHeight()>=myWorld.getHeight())
-        return(true);
+        //if(getY()-myImage.getHeight()<=1 || getY()+myImage.getHeight()>=myWorld.getHeight())
+        //return(true);
         
        return(false);
     }
+    
     
     public String getDirection()
     {

@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Alien here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Diego Alfonso Ambriz Martinez 
+ * @version 20-11-14
  */
 public class Finn extends Enemy
 {
@@ -27,10 +27,11 @@ public class Finn extends Enemy
     private GreenfootImage walkLeft4=new GreenfootImage("finnLeft4.png");
     private GreenfootImage walkLeft5=new GreenfootImage("finnLeft5.png");
     
-    private boolean isDirectionLeft;
     private int countMoveRight;
     private int countMoveLeft;
+    
     private String direction;
+    
     private int health;
     public boolean dead;
     
@@ -50,8 +51,7 @@ public class Finn extends Enemy
         moveLeft[2]=walkLeft3;
         moveLeft[3]=walkLeft4;
         moveLeft[4]=walkLeft5;
-        
-        isDirectionLeft=true;
+       
         direction="Left";
         
         countMoveRight=0;
@@ -62,12 +62,14 @@ public class Finn extends Enemy
     
     public void act() 
     {
-       if(getX()<270)
+       //if(getX()<270)
+       if(isTouching(Block.class)!=true)
        {
            direction="Right";
        }
        
-       if(getX()>595)
+       //if(getX()>595)
+       if(isTouching(BlockRight.class))
        {
            direction="Left";
        }
@@ -110,16 +112,11 @@ public class Finn extends Enemy
     
     public boolean isDead()
     {
-       /*if(health==0)
-       {
-           return true;
-           //setLocation(1000,0);
-           
-           //getWorld().removeObject(this);
-       }
-       
-       else
-           return false;*/
        return dead;
+    }
+    
+    public void setDead(boolean isDead)
+    {
+        dead=isDead;
     }
 }
