@@ -14,49 +14,18 @@ public class Ipod extends Bonus
      */
     private boolean isIpod;
     private boolean isDead;
-    private SimpleTimer ipodTimer;
     
     public Ipod()
     {
         isIpod=false;
-        ipodTimer=new SimpleTimer();
-        ipodTimer.mark();
         isDead=false;
     }
     
     public void act() 
     {
-        // Add your action code here.
-        
-        
-        if(isDead==true)
-        {
-            ipodTimer.mark();
-            if(ipodTimer.millisElapsed()>=10000)
-            {
-                getWorld().removeObject(this);
-            }
-        }
-        /*if(this.ipodTimer.millisElapsed()>=10000)
-        {
-            ipodTimer.mark();
-            isIpod=true;
-        }*/
-        
         if(isTouching(Player.class))
         {
-            isIpod=true;
             getWorld().removeObject(this);
         }
-    }
-    
-    public void setIpod(boolean dead)
-    {
-        isDead=dead;
-    }
-    
-    public boolean GetIpod()
-    {
-        return isIpod;
     }
 }

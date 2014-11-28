@@ -14,35 +14,15 @@ public class Usb extends Bonus
      */
     private boolean isUsb;
     private boolean isDead;
-    private SimpleTimer ipodTimer;
     
     public Usb()
     {
         isUsb=false;
-        ipodTimer=new SimpleTimer();
-        ipodTimer.mark();
         isDead=false;
     }
     
     public void act() 
     {
-        // Add your action code here.
-        
-        
-        if(isDead==true)
-        {
-            ipodTimer.mark();
-            if(ipodTimer.millisElapsed()>=10000)
-            {
-                getWorld().removeObject(this);
-            }
-        }
-        /*if(this.ipodTimer.millisElapsed()>=10000)
-        {
-            ipodTimer.mark();
-            isIpod=true;
-        }*/
-        
         if(isTouching(Player.class))
         {
             isUsb=true;
