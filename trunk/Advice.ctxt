@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.params=unaCadena
+comment0.target=Advice(java.lang.String)
+comment1.params=unaCadena
+comment1.target=java.lang.String\ muestraLetrero(java.lang.String)
+numComments=2

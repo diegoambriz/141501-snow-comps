@@ -12,6 +12,10 @@ public class BlockLeft extends Actor
      * Act - do whatever the BlockTop wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    
+    /**
+     * Constructor de la clase BlockLeft
+     */
     public BlockLeft()
     {
         dibujar();

@@ -21,12 +21,23 @@ public class Player extends Actor
     private GreenfootImage []shootLeft;
     private GreenfootImage []dead;
     
-    private Counter msgScore;
-    private Counter msgLifes;
-    private CounterLifes countLifes;
     private int enemies;
     
+    private SimpleTimer clock;
     private SimpleTimer playerTimer;
+    private int countMoveRight;
+    private int countMoveLeft;
+    private int countJumpLeft;
+    private int countJumpRight;
+    
+    private CounterLifes countLifes;
+    private Counter counterLevel;
+    
+    private Counter msgScore;
+    private Counter msgLifes;
+    
+    private Counter seconds;
+    private Counter minutes;
     
     private GreenfootImage walkRight1 =new GreenfootImage("nickRight1.png");
     private GreenfootImage walkRight2 =new GreenfootImage("nickRight2.png");
@@ -76,8 +87,8 @@ public class Player extends Actor
     private GreenfootSound shoot=new GreenfootSound("shoot.wav");
     private GreenfootSound deadSound=new GreenfootSound("dead.mp3");
     
-    private int score=0;
-    private int lifes=3;
+    private int score;
+    private int lifes;
     
     private boolean isDirectionRight;
     private boolean isTurnDown;
@@ -85,14 +96,14 @@ public class Player extends Actor
     private boolean upKeyDown;
     
     private String direction;
+    private boolean playerDead;
     
-    private int countMoveRight;
-    private int countMoveLeft;
-    private int countJumpLeft;
-    private int countJumpRight;
-    
+    /**
+     * Constructor de la clase Player
+     */
     public Player()
     {
+        playerDead=false;
         moveRight= new GreenfootImage[3];
         moveLeft= new GreenfootImage[3];
         jumpLeft= new GreenfootImage[6];
@@ -156,30 +167,116 @@ public class Player extends Actor
         msgScore=new Counter("Score:");
         countLifes=new CounterLifes();
         playerTimer=new SimpleTimer();
-    
+        
+        countLifes=new CounterLifes();
+        
+        counterLevel=new Counter("Level ");
+        msgScore=new Counter("Score: ");
+        msgLifes=new Counter();
+        
+        seconds=new Counter("Seconds: ");
+        minutes=new Counter("Minutes: ");
+        
+        clock=new SimpleTimer();
+        
         countMoveRight=0;
         countMoveLeft=0;
         countJumpLeft=0;
+        
+        score=0;
+        lifes=3;
+        
+        
+        minutes.setValue(3);
+        seconds.setValue(0);
+        
+        clock.mark();
     }
-    
-    public int getScore()
-    {
-        return score;
-    }
-    
+ 
     public void act() 
     {
-        getWorld().addObject(msgScore,400,25);
+        SnowCompsWorld world= (SnowCompsWorld)getWorld();
+        Ghost ghost=new Ghost();
+        
+        getWorld().addObject(msgScore,260,25);
         getWorld().addObject(countLifes,50, 25);
         getWorld().addObject(msgLifes,120,25);
+        
+        getWorld().addObject(counterLevel,400,25);
+        
+        getWorld().addObject(minutes, 600, 25);
+        getWorld().addObject(seconds, 730, 25);
         
         isTurnDown=false;
         msgScore.setValue(score);
         msgLifes.setValue(lifes);
         
-        if(enemies==0)
+        if(seconds.getValue()==0)
         {
+            seconds.setValue(59);
+            minutes.add(-1);
+        }
+        
+        if(clock.millisElapsed()>=1000)
+        {
+            clock.mark();
+            seconds.add(-1);
+        }
+        
+        if(minutes.getValue()==2 && seconds.getValue()==0)
+        {
+            world.addObject(ghost,50, 100);
+        }
+        
+        /*if(enemies==0)
+        {
+            //Greenfoot.stop();
+            //world.eliminaObjetos();
+            //world.nivel2();
+            //getWorld().eliminaObjetos();
+            world.eliminaObjetos();
+            world.prepare(2);
+        }*/
+        if(world.getLevel()==1)
+        {
+            counterLevel.setValue(1);
+            if(enemies==0)
+            {
+                enemies=5;
+                world.cleanWorld();
+                //world.quitObjects();
+                world.prepare(2);
+            }
+        }
+        
+        if(world.getLevel()==2)
+        {
+            counterLevel.setValue(2);
+            if(enemies==0)
+            {
+                enemies=14;
+                world.cleanWorld();
+                //world.quitObjects();
+                world.prepare(3);
+            }
+        }
+        
+        if(world.getLevel()==3)
+        {
+            counterLevel.setValue(3);
+            if(enemies==0)
+            {
+                //enemies=14;
+                //world.eliminaObjetos();
+                //world.quitObjects();
+                //world.prepare(3);
+                world.cleanWorld();
+            world.setBackground("gameOver.png");
+            //Greenfoot.delay(400);
             Greenfoot.stop();
+            //world.prepare(0);
+                Greenfoot.stop();
+            }
         }
         
         if(playerTimer.millisElapsed()>=400)
@@ -191,10 +288,17 @@ public class Player extends Actor
         
         if(lifes==0)
         {
+            world.cleanWorld();
+            world.setBackground("gameOver.png");
+            //Greenfoot.delay(400);
             Greenfoot.stop();
+            //world.prepare(0);
+            
+            lifes=3;
+            //Greenfoot.stop();
         }
         
-        if(Greenfoot.isKeyDown("right") && isTouching(Block.class) && isTouching(BlockRight.class)!=true)
+        if(Greenfoot.isKeyDown("right") && this.isTouching(Block.class) && this.isTouching(BlockRight.class)!=true)
         {
             isDirectionRight=true;
             direction="right";
@@ -266,20 +370,21 @@ public class Player extends Actor
                 }
             }
             
-            if(isTouching(Block.class)!=true)
-            {
-                setImage(jumpDown[1]);
-                setLocation(getX(),getY()+10);
-            }
+            //if(isTouching(Block.class)!=true)
+            //{
+              //  setImage(jumpDown[1]);
+                //setLocation(getX(),getY()+10);
+            //}
         }
         
-        if(isTouching(Block.class)!=true)
+        if(this.isTouching(Block.class)!=true)
         {
+            setImage(jumpDown[0]);
             setLocation(getX(),getY()+10);
             
             if(getY()>=550)
             {
-                setImage(jumpDown[1]);
+                setImage(jumpDown[0]);
                 setLocation(getX(),550);
             }
         }
@@ -377,6 +482,9 @@ public class Player extends Actor
         }
     }
     
+    /**
+     * Verifica si el jugador esta tocando un Borde de la pantalla
+     */
     public boolean isAtEdge()
     {
         SnowCompsWorld myWorld;
@@ -393,9 +501,24 @@ public class Player extends Actor
        return(false);
     }
     
-    
+    /**
+     * Regresa la direccion del jugador
+     */
     public String getDirection()
     {
         return direction;
+    }
+    
+    /**
+     * Regresa el score del jugador
+     */
+    public int getScore()
+    {
+        return score;
+    }
+    
+    public int getLifes()
+    {
+        return lifes;
     }
 }

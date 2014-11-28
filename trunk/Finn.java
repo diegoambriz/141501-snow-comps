@@ -33,7 +33,8 @@ public class Finn extends Enemy
     private String direction;
     
     private int health;
-    public boolean dead;
+    //public boolean dead;
+    private Bonus bonus;
     
     public Finn()
     {
@@ -57,13 +58,13 @@ public class Finn extends Enemy
         countMoveRight=0;
         countMoveLeft=0;
         health=3;
-        dead=false;
+        //dead=false;
     }
     
     public void act() 
     {
        //if(getX()<270)
-       if(isTouching(Block.class)!=true)
+       /*if(isTouching(Block.class)!=true)
        {
            direction="Right";
        }
@@ -72,7 +73,7 @@ public class Finn extends Enemy
        if(isTouching(BlockRight.class))
        {
            direction="Left";
-       }
+       }*/
         
        if(direction=="Left")
        {
@@ -84,6 +85,11 @@ public class Finn extends Enemy
            setLocation(getX()-5,getY());
            setImage(moveLeft[countMoveLeft]);
            countMoveLeft++;
+           
+           if(isTouching(Block.class)!=true || isAtEdge() || isTouching(BlockLeft.class))
+           {
+               direction="Right";
+           }
        }
        
        if(direction=="Right")
@@ -96,6 +102,11 @@ public class Finn extends Enemy
            setLocation(getX()+5,getY());
            setImage(moveRight[countMoveRight]);
            countMoveRight++;
+           
+           if(isTouching(Block.class)!=true || isAtEdge() || isTouching(BlockRight.class))
+           {
+               direction="Left";
+           }
        }
        
        if(isTouching(SnowBall.class))
@@ -106,11 +117,30 @@ public class Finn extends Enemy
        
        if(health==0)
        {
-           this.dead=true;
+           //this.dead=true;
+           int rnd=Greenfoot.getRandomNumber(3);
+            
+           switch(rnd)
+           {
+               case 0:
+               bonus=new Usb();
+               break;
+                
+               case 1:
+               bonus=new Ipod();
+               break;
+                
+               case 2:
+               bonus=new Tablet();
+               break;
+           }
+            
+           getWorld().addObject(bonus,getX(),getY());
+           getWorld().removeObject(this);
        }
     } 
     
-    public boolean isDead()
+    /*public boolean isDead()
     {
        return dead;
     }
@@ -118,5 +148,5 @@ public class Finn extends Enemy
     public void setDead(boolean isDead)
     {
         dead=isDead;
-    }
+    }*/
 }

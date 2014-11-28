@@ -1,8 +1,10 @@
 #BlueJ class context
 comment0.params=aDirection
 comment0.target=SnowBall(java.lang.String)
+comment0.text=\r\n\ Constructor\ de\ la\ clase\ SnowBall\r\n
 comment1.params=
 comment1.target=void\ act()
+comment1.text=\r\n\ Agrega\ un\ objeto\ SnowBall\ al\ mundo\r\n
 comment2.params=
 comment2.target=boolean\ isShoot()
 comment3.params=

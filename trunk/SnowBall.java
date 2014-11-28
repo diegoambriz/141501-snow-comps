@@ -14,13 +14,19 @@ public class SnowBall extends Actor
      */
     private String shootDirection;
     private boolean target;
-
+    
+    /**
+     * Constructor de la clase SnowBall
+     */
     public SnowBall(String aDirection)
     {
         shootDirection=aDirection;
         target=false;
     }
     
+    /**
+     * Agrega un objeto SnowBall al mundo
+     */
     public void act() 
     {
         if(shootDirection=="right")
