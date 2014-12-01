@@ -1,27 +1,22 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class SnowBall here.
+ * Crea un objeto snowball y actua segun la direccion;
  * 
  * @author Diego Alfonso Ambriz Martinez 
  * @version 20-11-2014
  */
 public class SnowBall extends Actor
 {
-    /**
-     * Act - do whatever the SnowBall wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     private String shootDirection;
-    private boolean target;
     
     /**
-     * Constructor de la clase SnowBall
+     * Constructor de la clase SnowBall,recibe como parametro una direccin para disparar en direccion
+     * derecha o izquierda
      */
     public SnowBall(String aDirection)
     {
         shootDirection=aDirection;
-        target=false;
     }
     
     /**
@@ -43,29 +38,23 @@ public class SnowBall extends Actor
         {
             getWorld().removeObject(this);
         }
-        
-        //if(isTouching(Predator.class))
-        //{
-          //  target=true;
-           // getWorld().removeObject(this);
-        //}
     }
     
-    public boolean isShoot()
+    /**
+     * Verifica si el objeto esta tocando un Borde de la pantalla
+     */
+    public boolean isAtEdge()
     {
-        return target;
-    }
-    
-    public boolean shootPredator()
-    {
-        if(target==true)
+        SnowCompsWorld myWorld;
+        myWorld=(SnowCompsWorld)getWorld();
+        
+        GreenfootImage myImage=this.getImage();
+        
+        if(getX()-myImage.getWidth()/2<=1 || getX()+myImage.getWidth()>=myWorld.getWidth())
         {
-            return true;
+            return(true);
         }
         
-        else
-        {
-            return false;
-        }
+        return(false);
     }
 }

@@ -1,12 +1,11 @@
 #BlueJ class context
 comment0.params=aDirection
 comment0.target=SnowBall(java.lang.String)
-comment0.text=\r\n\ Constructor\ de\ la\ clase\ SnowBall\r\n
+comment0.text=\r\n\ Constructor\ de\ la\ clase\ SnowBall,recibe\ como\ parametro\ una\ direccin\ para\ disparar\ en\ direccion\r\n\ derecha\ o\ izquierda\r\n
 comment1.params=
 comment1.target=void\ act()
 comment1.text=\r\n\ Agrega\ un\ objeto\ SnowBall\ al\ mundo\r\n
 comment2.params=
-comment2.target=boolean\ isShoot()
-comment3.params=
-comment3.target=boolean\ shootPredator()
-numComments=4
+comment2.target=boolean\ isAtEdge()
+comment2.text=\r\n\ Verifica\ si\ el\ objeto\ esta\ tocando\ un\ Borde\ de\ la\ pantalla\r\n
+numComments=3

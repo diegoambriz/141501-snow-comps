@@ -8,17 +8,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Ipod extends Bonus
 {
-    /**
-     * Act - do whatever the Ipod wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    private boolean isIpod;
-    private boolean isDead;
-    
     public Ipod()
     {
-        isIpod=false;
-        isDead=false;
+        
     }
     
     public void act() 

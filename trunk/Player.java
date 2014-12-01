@@ -2,15 +2,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
  * Write a description of class Player here.
- * 
+ * Esta es la clase principal,el jugador puede moverse a la izquierda o a la derecha o saltar segun la tecla oprimida
+ * Eljugador tiene 3 vidas en el juego,si es tocado por un objeto de la clase enemigo perdera una vida
+ * Para matar a los enemigos debe deisparar bolas de nieve si elimina a un enemigo aparecera un bonus
+ * si el jugador recoge el bonus aumentara su score.
  * @author Diego Alfonso Ambriz Martinez 
  * @version 20-11-2014
  */
 public class Player extends Actor
 {
     /**
-     * Act - do whatever the Player wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Declaracion de variables de instancia
      */
     private GreenfootImage []moveRight;
     private GreenfootImage []moveLeft;
@@ -86,24 +88,23 @@ public class Player extends Actor
     private GreenfootSound bonus=new GreenfootSound("bonus.mp3");
     private GreenfootSound shoot=new GreenfootSound("shoot.wav");
     private GreenfootSound deadSound=new GreenfootSound("dead.mp3");
+    private GreenfootSound act=new GreenfootSound("act.mp3");
+    private GreenfootSound gameover=new GreenfootSound("gameover.mp3");
+    
     
     private int score;
     private int lifes;
-    
-    private boolean isDirectionRight;
+   
     private boolean isTurnDown;
     private boolean aKeyDown;
-    private boolean upKeyDown;
     
     private String direction;
-    private boolean playerDead;
     
     /**
-     * Constructor de la clase Player
+     * Constructor de la clase Player,se inicializan las variables de isntancia
      */
     public Player()
     {
-        playerDead=false;
         moveRight= new GreenfootImage[3];
         moveLeft= new GreenfootImage[3];
         jumpLeft= new GreenfootImage[6];
@@ -157,18 +158,14 @@ public class Player extends Actor
         dead[7]=dead8;
         
         enemies=5;
-        isDirectionRight=true;
-        isTurnDown=false;
         aKeyDown=false;
-        upKeyDown=false;
+       
         direction="right";
         
         msgLifes=new Counter();
         msgScore=new Counter("Score:");
         countLifes=new CounterLifes();
         playerTimer=new SimpleTimer();
-        
-        countLifes=new CounterLifes();
         
         counterLevel=new Counter("Level ");
         msgScore=new Counter("Score: ");
@@ -185,8 +182,7 @@ public class Player extends Actor
         
         score=0;
         lifes=3;
-        
-        
+  
         minutes.setValue(3);
         seconds.setValue(0);
         
@@ -196,309 +192,246 @@ public class Player extends Actor
     public void act() 
     {
         SnowCompsWorld world= (SnowCompsWorld)getWorld();
-        Ghost ghost=new Ghost();
         
-        getWorld().addObject(msgScore,260,25);
-        getWorld().addObject(countLifes,50, 25);
-        getWorld().addObject(msgLifes,120,25);
-        
-        getWorld().addObject(counterLevel,400,25);
-        
-        getWorld().addObject(minutes, 600, 25);
-        getWorld().addObject(seconds, 730, 25);
-        
-        isTurnDown=false;
-        msgScore.setValue(score);
-        msgLifes.setValue(lifes);
-        
-        if(seconds.getValue()==0)
+        if(world.getLevel()!=0)
         {
-            seconds.setValue(59);
-            minutes.add(-1);
-        }
+            getWorld().addObject(msgScore,260,25);
+            getWorld().addObject(countLifes,50, 25);
+            getWorld().addObject(msgLifes,120,25);
         
-        if(clock.millisElapsed()>=1000)
-        {
-            clock.mark();
-            seconds.add(-1);
-        }
+            getWorld().addObject(counterLevel,400,25);
         
-        if(minutes.getValue()==2 && seconds.getValue()==0)
-        {
-            world.addObject(ghost,50, 100);
-        }
+            getWorld().addObject(minutes, 600, 25);
+            getWorld().addObject(seconds, 730, 25);
         
-        /*if(enemies==0)
-        {
-            //Greenfoot.stop();
-            //world.eliminaObjetos();
-            //world.nivel2();
-            //getWorld().eliminaObjetos();
-            world.eliminaObjetos();
-            world.prepare(2);
-        }*/
-        if(world.getLevel()==1)
-        {
-            counterLevel.setValue(1);
-            if(enemies==0)
-            {
-                enemies=5;
-                world.cleanWorld();
-                //world.quitObjects();
-                world.prepare(2);
-            }
-        }
-        
-        if(world.getLevel()==2)
-        {
-            counterLevel.setValue(2);
-            if(enemies==0)
-            {
-                enemies=14;
-                world.cleanWorld();
-                //world.quitObjects();
-                world.prepare(3);
-            }
-        }
-        
-        if(world.getLevel()==3)
-        {
-            counterLevel.setValue(3);
-            if(enemies==0)
-            {
-                //enemies=14;
-                //world.eliminaObjetos();
-                //world.quitObjects();
-                //world.prepare(3);
-                world.cleanWorld();
-            world.setBackground("gameOver.png");
-            //Greenfoot.delay(400);
-            Greenfoot.stop();
-            //world.prepare(0);
-                Greenfoot.stop();
-            }
-        }
-        
-        if(playerTimer.millisElapsed()>=400)
-        {
-            playerTimer.mark();
-            aKeyDown=false;
-            upKeyDown=false;
-        }
-        
-        if(lifes==0)
-        {
-            world.cleanWorld();
-            world.setBackground("gameOver.png");
-            //Greenfoot.delay(400);
-            Greenfoot.stop();
-            //world.prepare(0);
+            isTurnDown=false;
+            msgScore.setValue(score);
+            msgLifes.setValue(lifes);
             
-            lifes=3;
-            //Greenfoot.stop();
-        }
-        
-        if(Greenfoot.isKeyDown("right") && this.isTouching(Block.class) && this.isTouching(BlockRight.class)!=true)
-        {
-            isDirectionRight=true;
-            direction="right";
-            aKeyDown=true;
-            
-            if(countMoveRight>2)
+            if(seconds.getValue()==0)
             {
-                countMoveRight=0;
+                seconds.setValue(59);
+                minutes.add(-1);
             }
-            
-            if(getX()<=770 && isTouching(Block.class)&& isTouching(BlockRight.class)!=true)
+        
+            if(clock.millisElapsed()>=1000)
             {
-                if(Greenfoot.isKeyDown("right"))
+                clock.mark();
+                seconds.add(-1);
+            }
+        
+            if(world.getLevel()==1)
+            {
+                counterLevel.setValue(1);
+                if(enemies==0)
+                {
+                    enemies=5;
+                    world.cleanWorld();
+                    world.prepare(2);
+                }
+            }
+        
+            if(world.getLevel()==2)
+            {
+                counterLevel.setValue(2);
+                if(enemies==0)
+                {
+                    enemies=14;
+                    world.cleanWorld();
+                    world.prepare(3);
+                }
+            }
+        
+            if(world.getLevel()==3)
+            {
+                counterLevel.setValue(3);
+                if(enemies==0)
+                {
+                    world.stopMusic();
+                    world.cleanWorld();
+                    
+                    gameover.play();
+                    world.setBackground("gameOver.png");
+                    Greenfoot.delay(40);
+                    world.prepare(0);
+                
+                    lifes=3;
+                    score=0;
+                    world.setLevel(0);
+                
+                    minutes.setValue(3);
+                    seconds.setValue(0);
+                }
+            }
+        
+            if(playerTimer.millisElapsed()>=400)
+            {
+                playerTimer.mark();
+                aKeyDown=false;
+            }
+        
+            if(lifes==0 || (minutes.getValue()==0 && seconds.getValue()==0))
+            {
+                world.stopMusic();
+                world.cleanWorld();
+                
+                gameover.play();
+                world.setBackground("gameOver.png");
+                Greenfoot.delay(120);
+                world.prepare(0);
+                
+                lifes=3;
+                score=0;
+                world.setLevel(0);
+                
+                minutes.setValue(3);
+                seconds.setValue(0);
+            }
+        
+            if(Greenfoot.isKeyDown("right") && isTouching(Block.class) && isTouching(BlockRight.class)!=true)
+            {
+                direction="right";
+                aKeyDown=true;
+                
+                if(countMoveRight>2)
+                {
+                    countMoveRight=0;
+                }
+            
+                if(getX()<770)
                 {
                     setLocation(getX()+5,getY());
                     setImage(moveRight[countMoveRight]);
                     countMoveRight++;
                 }
             }
-        }
   
-        if(Greenfoot.isKeyDown("left") && isTouching(Block.class) && isTouching(BlockLeft.class)!=true)
-        {
-            isDirectionRight=false;
-            direction="left";
-            aKeyDown=true;
-            
-            if(countMoveLeft>2)
+            if(Greenfoot.isKeyDown("left") && isTouching(Block.class) && isTouching(BlockLeft.class)!=true)
             {
-                countMoveLeft=0;
-            }
+                direction="left";
+                aKeyDown=true;
+                
+                if(countMoveLeft>2)
+                {
+                    countMoveLeft=0;
+                }
             
-            if(getX()>20 && isTouching(Block.class)&& isTouching(BlockLeft.class)!=true)
-            {
-                if(Greenfoot.isKeyDown("left"))
+                if(getX()>20)
                 {
                     setLocation(getX()-5,getY());
                     setImage(moveLeft[countMoveLeft]);
                     countMoveLeft++;
                 }
             }
-        }
         
-        if(Greenfoot.isKeyDown("up") && isTouching(Block.class))// && upKeyDown==false && aKeyDown==false)// && isTouching(BlockDown.class)!=true)
-        {
-            //aKeyDown=true;
-            //upKeyDown=true;
-            
-            
-            if(isDirectionRight!=true)
+            if(Greenfoot.isKeyDown("up") && isTouching(Block.class))
             {
-                jump.play();
-                for(int i=0;i<6;i++)
+                if(direction=="left")
                 {
-                    Greenfoot.delay(1);
-                    setLocation(getX(),getY()-16);
-                    setImage(jumpLeft[i]);
+                    jump.play();
+                    for(int i=0;i<6;i++)
+                    {
+                        Greenfoot.delay(1);
+                        setLocation(getX(),getY()-16);
+                        setImage(jumpLeft[i]);
+                    }
                 }
-            }
             
-            else
-            {
-                jump.play();
-                for(int j=0;j<6;j++)
-                {
-                    Greenfoot.delay(1);
-                    setLocation(getX(),getY()-16);
-                    setImage(jumpRight[j]);
-                }
-            }
-            
-            //if(isTouching(Block.class)!=true)
-            //{
-              //  setImage(jumpDown[1]);
-                //setLocation(getX(),getY()+10);
-            //}
-        }
-        
-        if(this.isTouching(Block.class)!=true)
-        {
-            setImage(jumpDown[0]);
-            setLocation(getX(),getY()+10);
-            
-            if(getY()>=550)
-            {
-                setImage(jumpDown[0]);
-                setLocation(getX(),550);
-            }
-        }
-        
-        if(Greenfoot.isKeyDown("Enter") && isTurnDown==false && aKeyDown==false)
-        {
-            shoot.play();
-            SnowBall aSnowBall;
-            aKeyDown=true;
-            
-            if(isDirectionRight==true)
-            {
-                aSnowBall=new SnowBall("right");
-                
-                for(int i=0;i<3;i++)
-                {
-                    Greenfoot.delay(1);
-                    setImage(shootRight[i]);
-                }
-                
-                getWorld().addObject(aSnowBall,getX()+20,getY());
-            }
-            
-            else
-            {
-                aSnowBall=new SnowBall("left");
-                
-                for(int i=0;i<3;i++)
-                {
-                    Greenfoot.delay(1);
-                    setImage(shootLeft[i]);
-                }
-                
-                getWorld().addObject(aSnowBall,getX()-20,getY());
-            }
-        }
-        
-        /*if(isTouching(Block.class)!=true && getY()<550)
-        {
-            isTurnDown=true;
-            setLocation(getX(),getY()+10);
-            
-            setImage(jumpDown[0]);
-            setImage(jumpDown[1]);
-            
-            
-            
-            if(getY()>500)
-            {
-                setLocation(getX(),550);
-                
-                if(isDirectionRight==true)
-                {
-                    setImage(walkRight1);
-                }
-                
                 else
                 {
-                    setImage(walkLeft1);
+                    jump.play();
+                    for(int j=0;j<6;j++)
+                    {
+                        Greenfoot.delay(1);
+                        setLocation(getX(),getY()-16);
+                        setImage(jumpRight[j]);
+                    }
                 }
             }
-        }*/
         
-        if(isTouching(Predator.class)|| isTouching(Finn.class) || isTouching(Ghost.class))
-        {
-            deadSound.play();
-            for(int i=0;i<8;i++)
+            if(isTouching(Block.class)!=true)
             {
+                isTurnDown=true;
+                
+                setImage(jumpDown[0]);
+                setLocation(getX(),getY()+10);
+                
+                if(getY()>=550)
+                {
+                    setImage(jumpDown[0]);
+                    setLocation(getX(),550);
+                }
+            }
+        
+            if(Greenfoot.isKeyDown("S") && isTurnDown==false && aKeyDown!=true)
+            {
+                shoot.play();
+                aKeyDown=true;
+                
+                SnowBall aSnowBall;
+            
+                if(direction=="right")
+                {
+                    aSnowBall=new SnowBall("right");
+                
+                    for(int i=0;i<3;i++)
+                    {
+                        Greenfoot.delay(1);
+                        setImage(shootRight[i]);
+                    }
+                
+                    getWorld().addObject(aSnowBall,getX()+20,getY());
+                }
+            
+                else
+                {
+                    aSnowBall=new SnowBall("left");
+                
+                    for(int i=0;i<3;i++)
+                    {
+                        Greenfoot.delay(1);
+                        setImage(shootLeft[i]);
+                    }
+                
+                    getWorld().addObject(aSnowBall,getX()-20,getY());
+                }
+            }
+       
+            if(isTouching(Predator.class)|| isTouching(Finn.class) || isTouching(Ghost.class))
+            {
+                deadSound.play();
+                for(int i=0;i<8;i++)
+                {
                     Greenfoot.delay(2);
                     setImage(dead[i]);
+                }
+                
+                
+                setLocation(100,550);
+                lifes--;
             }
-            setLocation(100,550);
-            lifes--;
-        }
 
-        if(isTouching(Usb.class))
-        {
-            bonus.play();
-            score+=100;
-            enemies--;
+            if(isTouching(Usb.class))
+            {
+                bonus.play();
+                score+=100;
+                enemies--;
+            }
+        
+            if(isTouching(Ipod.class))
+            {
+                bonus.play();
+                score+=300;
+                enemies--;
+            }
+        
+            if(isTouching(Tablet.class))
+            {
+                bonus.play();
+                score+=500;
+                enemies--;
+            }
         }
-        
-        if(isTouching(Ipod.class))
-        {
-            bonus.play();
-            score+=300;
-            enemies--;
-        }
-        
-        if(isTouching(Tablet.class))
-        {
-            bonus.play();
-            score+=500;
-            enemies--;
-        }
-    }
-    
-    /**
-     * Verifica si el jugador esta tocando un Borde de la pantalla
-     */
-    public boolean isAtEdge()
-    {
-        SnowCompsWorld myWorld;
-        myWorld=(SnowCompsWorld)getWorld();
-        
-        GreenfootImage myImage=this.getImage();
-        
-        if(getX()-myImage.getWidth()/2<=1 || getX()+myImage.getWidth()>=myWorld.getWidth())
-        return(true);
-        
-        //if(getY()-myImage.getHeight()<=1 || getY()+myImage.getHeight()>=myWorld.getHeight())
-        //return(true);
-        
-       return(false);
     }
     
     /**
@@ -517,6 +450,9 @@ public class Player extends Actor
         return score;
     }
     
+    /**
+     * Regresa las vidas del jugador
+     */
     public int getLifes()
     {
         return lifes;
