@@ -1,9 +1,10 @@
 #BlueJ class context
 comment0.params=
 comment0.target=BlockLeft()
-comment0.text=\r\n\ Constructor\ de\ la\ clase\ BlockLeft\r\n
+comment0.text=\r\n\ Constructor\ de\ la\ clase\ BlockLeft\r\n\ Dibuja\ el\ objeto\ en\ pantalla\r\n
 comment1.params=
 comment1.target=void\ act()
 comment2.params=
 comment2.target=void\ dibujar()
+comment2.text=\r\n\ Le\ asigna\ una\ imagen\ al\ objeto.\r\n
 numComments=3

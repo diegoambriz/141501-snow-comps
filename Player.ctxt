@@ -1,18 +1,16 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Player()
-comment0.text=\r\n\ Constructor\ de\ la\ clase\ Player\r\n
+comment0.text=\r\n\ Constructor\ de\ la\ clase\ Player,se\ inicializan\ las\ variables\ de\ isntancia\r\n
 comment1.params=
 comment1.target=void\ act()
 comment2.params=
-comment2.target=boolean\ isAtEdge()
-comment2.text=\r\n\ Verifica\ si\ el\ jugador\ esta\ tocando\ un\ Borde\ de\ la\ pantalla\r\n
+comment2.target=java.lang.String\ getDirection()
+comment2.text=\r\n\ Regresa\ la\ direccion\ del\ jugador\r\n
 comment3.params=
-comment3.target=java.lang.String\ getDirection()
-comment3.text=\r\n\ Regresa\ la\ direccion\ del\ jugador\r\n
+comment3.target=int\ getScore()
+comment3.text=\r\n\ Regresa\ el\ score\ del\ jugador\r\n
 comment4.params=
-comment4.target=int\ getScore()
-comment4.text=\r\n\ Regresa\ el\ score\ del\ jugador\r\n
-comment5.params=
-comment5.target=int\ getLifes()
-numComments=6
+comment4.target=int\ getLifes()
+comment4.text=\r\n\ Regresa\ las\ vidas\ del\ jugador\r\n
+numComments=5

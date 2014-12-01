@@ -11,10 +11,14 @@ import java.util.List;
  */
 public class SnowCompsWorld extends World
 {
+    /**
+     * Declaracion de variables de instancia
+     */
     private Player player1;
     
     private GreenfootSound backgroundMusic;
     private GreenfootSound pause;
+    private GreenfootSound play;
     private int level;
     
     /**
@@ -29,8 +33,17 @@ public class SnowCompsWorld extends World
         
         backgroundMusic=new GreenfootSound("Main Theme Snow-Comps.mp3");
         pause=new GreenfootSound("pause.wav");
+        play=new GreenfootSound("play.mp3");
         
         prepare(0);
+    }
+    
+    /**
+     * Metodo actuar de la clase SnowCompsWorld
+     */
+    public void act()
+    {
+        
     }
     
     /**
@@ -38,27 +51,20 @@ public class SnowCompsWorld extends World
      */
     public void prepare(int aLevel)
     {
-        //addObject(minutes,620,25);
-        //addObject(seconds,730,25);
-        
-        
         switch(aLevel)
         {
             case 0:
-            //System.out.println("Menu");
             menu();
             break;
             
             case 1:
+            play.play();
+            Greenfoot.delay(30);
             backgroundMusic.playLoop();
-            //msgLifes.setValue(player1.getLifes());
-            //msgScore.setValue(player1.getScore());
             level1();
             break;
             
             case 2:
-            //msgLifes.setValue(player1.getLifes());
-            //msgScore.setValue(player1.getScore());
             level2();
             break;
             
@@ -80,14 +86,16 @@ public class SnowCompsWorld extends World
         HelpButton helpButton=new HelpButton();
         CreditsButton creditsButton=new CreditsButton();
         
+        addObject(player1,100,550);
+        
         addObject(playButton, getWidth()/2, 300);
         addObject(scoreButton, getWidth()/2, 370);
         addObject(helpButton, getWidth()/2, 440);
         addObject(creditsButton, getWidth()/2, 510);
     }
-    
+   
     /**
-     * Nivel 1 del juego
+     * Nivel 1 del juego el cual incluye pocos enemigos,se agrega el escenario correspondiente al nivel
      */
     public void level1()
     {
@@ -98,6 +106,9 @@ public class SnowCompsWorld extends World
         
         Predator predator1,predator2,predator3;
         Finn finn1,finn2;
+        Ghost ghost;
+        
+        ghost=new Ghost();
         
         predator1=new Predator();
         predator2=new Predator();
@@ -129,25 +140,11 @@ public class SnowCompsWorld extends World
         addObject(finn1,270,360);
         addObject(finn2,440,169);
         
-        //minutesGame=3;
-        //seconds.setValue(0);
-        
-        /*if(seconds.getValue()==0)
-        {
-            seconds.setValue(59);
-            minutesGame--;
-            minutes.setValue(minutesGame);
-        }
-        
-        if(clock.millisElapsed()>=1000)
-        {
-            clock.mark();
-            seconds.add(-1);
-        }*/
+        addObject(ghost,Greenfoot.getRandomNumber(getWidth()),Greenfoot.getRandomNumber(getHeight()));
     }
     
     /**
-     * Nivel 2 del juego
+     * Nivel 2 del juego,se agrega el escenario correspondiente al nivel,asi como los enemigos del nivel
      */
     public void level2()
     {
@@ -169,6 +166,10 @@ public class SnowCompsWorld extends World
         finn4=new Finn();
         finn5=new Finn();
         finn6=new Finn();
+        
+        Ghost ghost;
+        
+        ghost=new Ghost();
         
         plattaform10=new Plattaform1();
         plattaform11=new Plattaform2();
@@ -193,10 +194,12 @@ public class SnowCompsWorld extends World
         
         addObject(finn4,270,360);
         addObject(finn5,440,169);
+        
+        addObject(ghost,Greenfoot.getRandomNumber(getWidth()),Greenfoot.getRandomNumber(getHeight()));
     }
     
     /**
-     * Nivel 3 del juego
+     * Nivel 3 del juego,se agrega el escenario correspondiente al nivel,asi como los enemigos del nivel
      */
     public void level3()
     {
@@ -221,6 +224,7 @@ public class SnowCompsWorld extends World
         
         Predator predator1,predator2,predator3,predator4,predator5,predator6,predator7;
         Finn finn1,finn2,finn3,finn4,finn5,finn6,finn7;
+        Ghost ghost;
         
         predator1=new Predator();
         predator2=new Predator();
@@ -237,6 +241,10 @@ public class SnowCompsWorld extends World
         finn5=new Finn();
         finn6=new Finn();
         finn7=new Finn();
+        
+        
+        
+        ghost=new Ghost();
         
         addObject(player1,50,550);
         
@@ -275,6 +283,8 @@ public class SnowCompsWorld extends World
         addObject(predator7,350,75);
         addObject(finn6,105,75);
         addObject(finn7,630,75);
+        
+        addObject(ghost,Greenfoot.getRandomNumber(getWidth()),Greenfoot.getRandomNumber(getHeight()));
     }
     
     /**
@@ -292,13 +302,21 @@ public class SnowCompsWorld extends World
             i++;
         }
     }
-    
+   
     /**
      * Regresa el nivel actual
      */
     public int getLevel()
     {
         return level;
+    }
+    
+    /**
+     * Establece un nivel del juego de acuerdo a un parametro
+     */
+    public void setLevel(int aLevel)
+    {
+        level=aLevel;
     }
     
     /**
@@ -318,6 +336,14 @@ public class SnowCompsWorld extends World
     public void stopped()
     {
         pause.play();
+        backgroundMusic.stop();
+    }
+    
+    /**
+     * Detiene la musica de fondo del juego
+     */
+    public void stopMusic()
+    {
         backgroundMusic.stop();
     }
     
@@ -367,7 +393,6 @@ public class SnowCompsWorld extends World
     {
         if(UserInfo.isStorageAvailable())
         {
-
             UserInfo info=UserInfo.getMyInfo();
             if(player1.getScore()>player1.getScore())
             {

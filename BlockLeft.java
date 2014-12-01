@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class BlockTop here.
+ * Este bloque se utiliza para construir plataformas,y ser un borde de una de ellas,para evitar el paso del jugador;
  * 
  * @author Diego Alfonso Ambriz Martinez 
  * @version 20-11-2014
@@ -15,6 +15,7 @@ public class BlockLeft extends Actor
     
     /**
      * Constructor de la clase BlockLeft
+     * Dibuja el objeto en pantalla
      */
     public BlockLeft()
     {
@@ -23,9 +24,12 @@ public class BlockLeft extends Actor
     
     public void act() 
     {
-        // Add your action code here.
+        
     }
     
+    /**
+     * Le asigna una imagen al objeto.
+     */
     public void dibujar()
     {
         GreenfootImage imagen;

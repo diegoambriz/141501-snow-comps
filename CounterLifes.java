@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class CountLifes here.
+ * Este objeto solo se agrega al mundo como una imagen para el contador de vidas del jugador.
  * 
  * @author Diego Alfonso Ambriz Martinez 
  * @version 27-11-2014
@@ -9,14 +9,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class CounterLifes extends Actor
 {
-    /**
-     * Act - do whatever the CountLifes wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    
-    
-    /**Declaration of instance variables */
-    
     /**
      * Constructor de la Clase CounterLifes
      */
